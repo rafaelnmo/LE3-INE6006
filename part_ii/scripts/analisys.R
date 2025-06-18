@@ -56,6 +56,8 @@ print(amostra_idade)
 cat("\n📈 [INFO] Resumo estatístico da amostra:\n")
 print(summary(amostra_idade))
 
+#--------------------------------------------------------------------------
+#--------------------------------------------------------------------------
 # a) Construa um gráfico de probabilidade normal para os valores da amostra.
 media_amostra <- mean(amostra_idade)
 desvio_amostral <- sd(amostra_idade)
@@ -65,11 +67,11 @@ t_critico <- qt(1 - alpha/2, df = n - 1)
 
 cat("\n📍 a) Gráfico de probabilidade normal para os valores da amostra\n")
 
-# Gerar Q-Q plot da amostra de Idade
+# Gráfico Q-Q plot da amostra de Idade
 qqnorm(amostra_idade, main = "Gráfico de Probabilidade Normal - Idade (Amostra de 25)")
 qqline(amostra_idade, col = "blue", lwd = 2)
 
-# Histograma com curva normal
+# Gráfico Histograma com curva normal
 df_amostra <- data.frame(Idade = amostra_idade)
 ggplot(df_amostra, aes(x = Idade)) +
   geom_histogram(aes(y = after_stat(density)), bins = 8, fill = "skyblue", color = "black", alpha = 0.7) +
@@ -79,7 +81,8 @@ ggplot(df_amostra, aes(x = Idade)) +
        x = "Idade", y = "Densidade") +
   theme_minimal()
 
-
+#--------------------------------------------------------------------------
+#--------------------------------------------------------------------------
 # b) Intervalo de confiança de 95% para a média
 erro_padrao <- desvio_amostral / sqrt(n)
 ic_inferior <- media_amostra - t_critico * erro_padrao
@@ -88,68 +91,6 @@ ic_superior <- media_amostra + t_critico * erro_padrao
 cat("\n📍 b) Intervalo de 95% para a média populacional de Idade:\n")
 cat(sprintf("Intervalo: [%.2f ; %.2f]\n", ic_inferior, ic_superior))
 cat(sprintf("Interpretação: Estamos 95%% confiantes de que a média populacional de idade está entre %.2f e %.2f anos.\n", ic_inferior, ic_superior))
-
-
-# library(ggplot2)
-
-# Dados da média e IC
-df_ic <- data.frame(
-  media = media_amostra,
-  ic_inferior = ic_inferior,
-  ic_superior = ic_superior
-)
-
-# Gráfico
-ggplot(df_ic, aes(x = 1, y = media)) +
-  geom_point(size = 4, color = "blue") +
-  geom_errorbar(aes(ymin = ic_inferior, ymax = ic_superior), width = 0.1, color = "red", linewidth = 1.2) +
-  scale_x_continuous(breaks = NULL) +
-  labs(
-    title = "Intervalo de Confiança de 95% para a Média da Idade",
-    y = "Idade",
-    x = NULL
-  ) +
-  theme_minimal()
-
-# Curva da distribuição t com IC sombreado
-x_vals <- seq(media_amostra - 4*desvio_amostral, media_amostra + 4*desvio_amostral, length.out = 300)
-dens_vals <- dt((x_vals - media_amostra) / erro_padrao, df = n - 1) / erro_padrao
-
-df_t <- data.frame(x = x_vals, y = dens_vals)
-
-ggplot(df_t, aes(x = x, y = y)) +
-  geom_line(color = "blue", size = 1) +
-  geom_area(data = subset(df_t, x >= ic_inferior & x <= ic_superior), aes(x = x, y = y), fill = "skyblue", alpha = 0.5) +
-  geom_vline(xintercept = media_amostra, linetype = "dashed", color = "red", linewidth = 1) +
-  labs(
-    title = "Curva t com Intervalo de Confiança de 95%",
-    x = "Idade",
-    y = "Densidade"
-  ) +
-  theme_minimal()
-
-
-# Dados para plotagem
-df_ic <- data.frame(
-  media = media_amostra,
-  ic_inferior = ic_inferior,
-  ic_superior = ic_superior
-)
-
-ggplot(df_ic, aes(x = 1, y = media)) +
-  geom_point(size = 4, color = "blue") +
-  geom_errorbar(aes(ymin = ic_inferior, ymax = ic_superior), width = 0.2, color = "red", linewidth = 1.5) +
-  geom_text(aes(y = ic_inferior, label = sprintf("Limite inferior: %.2f", ic_inferior)), vjust = 1.5, size = 4) +
-  geom_text(aes(y = ic_superior, label = sprintf("Limite superior: %.2f", ic_superior)), vjust = -1, size = 4) +
-  geom_text(aes(y = media, label = sprintf("Média: %.2f", media)), vjust = -2, color = "black", size = 4.5, fontface = "bold") +
-  scale_x_continuous(breaks = NULL) +
-  labs(
-    title = "Intervalo de Confiança de 95% para a Média da Idade",
-    y = "Idade",
-    x = NULL
-  ) +
-  ylim(ic_inferior - 3, ic_superior + 3) +
-  theme_minimal()
 
 
 # Dados para a curva t
@@ -162,15 +103,28 @@ df_t <- data.frame(x = x_vals, y = dens_vals)
 
 # Gráfico
 ggplot(df_t, aes(x = x, y = y)) +
-  geom_line(color = "blue", size = 1.2) +
+  geom_line(color = "blue", linewidth = 1.2) +  
+  
   geom_area(data = subset(df_t, x >= ic_inferior & x <= ic_superior),
             aes(x = x, y = y),
             fill = "skyblue", alpha = 0.5) +
+  
   geom_vline(xintercept = media_amostra, linetype = "dashed", color = "red", linewidth = 1) +
-  geom_text(aes(x = media_amostra, y = max(y)*0.9, label = sprintf("Média: %.2f", media_amostra)), angle = 90, vjust = -0.5, hjust = 0.5) +
-  geom_text(aes(x = ic_inferior, y = 0, label = sprintf("%.2f", ic_inferior)), vjust = 1.5, color = "darkgreen") +
-  geom_text(aes(x = ic_superior, y = 0, label = sprintf("%.2f", ic_superior)), vjust = 1.5, color = "darkgreen") +
-  annotate("text", x = media_amostra, y = max(dens_vals)*0.5, label = "Área = 95%", size = 4, color = "black") +
+  annotate("text", x = media_amostra, y = max(df_t$y) * 0.9,
+           label = sprintf("Média: %.2f", media_amostra),
+           angle = 90, vjust = -0.5, hjust = 0.5) +
+
+  annotate("text", x = ic_inferior, y = 0,
+           label = sprintf("%.2f", ic_inferior),
+           vjust = 1.5, color = "darkgreen") +
+
+  annotate("text", x = ic_superior, y = 0,
+           label = sprintf("%.2f", ic_superior),
+           vjust = 1.5, color = "darkgreen") +
+
+  annotate("text", x = media_amostra, y = max(df_t$y)*0.5,
+           label = "Área = 95%", size = 4, color = "black") +
+
   labs(
     title = "Distribuição t com Intervalo de Confiança de 95%",
     x = "Idade",
@@ -179,10 +133,6 @@ ggplot(df_t, aes(x = x, y = y)) +
   theme_minimal()
 
 
-  library(ggplot2)
-
-# Supondo que já tenha:
-# media_amostra, desvio_amostral, ic_inferior, ic_superior, df_amostra
 
 ggplot(df_amostra, aes(x = Idade)) +
   geom_histogram(aes(y = after_stat(density)), bins = 8,
@@ -210,8 +160,8 @@ ggplot(df_amostra, aes(x = Idade)) +
 
 warnings()
 
-
-
+#--------------------------------------------------------------------------
+#--------------------------------------------------------------------------
 # c) Tamanho mínimo de amostra para precisão de 1 ano
 precisao <- 1
 n_min <- ceiling((t_critico * desvio_amostral / precisao)^2)
@@ -220,6 +170,10 @@ cat("Amostra necessária:", n_min, "\n")
 cat("Amostra coletada:", n, "\n")
 cat(ifelse(n >= n_min, "✅ A amostra é suficiente.\n", "❌ A amostra NÃO é suficiente.\n"))
 
+
+
+#--------------------------------------------------------------------------
+#--------------------------------------------------------------------------
 # d) Teste t unilateral: H0: μ = 32 vs H1: μ > 32
 media_hipotese <- 32
 t_stat <- (media_amostra - media_hipotese) / erro_padrao
@@ -237,22 +191,10 @@ x_vals <- seq(media_hipotese - 4 * erro_padrao, media_hipotese + 4 * erro_padrao
 t_dist <- dt((x_vals - media_hipotese) / erro_padrao, df = n - 1)
 df_plot <- data.frame(x = x_vals, y = t_dist)
 
-ggplot(df_plot, aes(x = x, y = y)) +
-  geom_line(color = "darkgreen") +
-  geom_vline(xintercept = media_amostra, color = "blue", linetype = "dotted", lwd = 1.2) +
-  geom_vline(xintercept = media_hipotese + t_critico * erro_padrao, color = "red", linetype = "dashed") +
-  annotate("text", x = media_amostra, y = max(t_dist) * 0.8, label = "Média amostra", hjust = -0.1, color = "blue") +
-  annotate("text", x = media_hipotese + t_critico * erro_padrao, y = max(t_dist) * 0.7,
-           label = "Limite crítico", hjust = 1.2, color = "red") +
-  labs(title = "Distribuição t - Teste unilateral (mu = 32)",
-       x = "Idade", y = "Densidade") +
-  theme_minimal()
-
-
 # Calculando os valores
 limite_critico <- media_hipotese + t_critico * erro_padrao
 
-# Plot atualizado com labels
+# Gráfico
 ggplot(df_plot, aes(x = x, y = y)) +
   geom_line(color = "darkgreen") +
   geom_vline(xintercept = media_amostra, color = "blue", linetype = "dotted", lwd = 1.2) +
@@ -263,11 +205,12 @@ ggplot(df_plot, aes(x = x, y = y)) +
   annotate("text", x = limite_critico, y = max(t_dist) * 0.7,
            label = sprintf("Limite crítico\n%.2f", limite_critico),
            hjust = 1.1, color = "red", size = 4) +
-  labs(title = "Distribuição t - Teste unilateral (μ = 32)",
+  labs(title = "Distribuição t - Teste unilateral (mu = 32)",
        x = "Idade", y = "Densidade") +
   theme_minimal()
 
-
+#--------------------------------------------------------------------------
+#--------------------------------------------------------------------------
 # e) Confronto entre intervalo e teste
 cat("\n📍 e) Comparação entre intervalo de confiança (b) e teste (d):\n")
 if (ic_inferior > media_hipotese) {
@@ -276,18 +219,35 @@ if (ic_inferior > media_hipotese) {
   cat("⚠️ O intervalo inclui 32 → consistente com a não rejeição de H0.\n")
 }
 
-# Intervalo de confiança (IC)
+
+# Gráfico Intervalo de confiança (IC) com labels
 ggplot(data = NULL, aes(x = 1, y = media_amostra)) +
+  # Ponto da média
   geom_point(size = 3, color = "blue") +
+  
+  # Barra de erro (intervalo de confiança)
   geom_errorbar(aes(ymin = ic_inferior, ymax = ic_superior), width = 0.2, color = "blue", lwd = 1.2) +
+
+  # Linha da hipótese nula
   geom_hline(yintercept = media_hipotese, linetype = "dashed", color = "red") +
-  annotate("text", x = 1.1, y = media_hipotese, label = "mu = 32", color = "red", hjust = 0) +
+
+  # Labels explicativos
+  annotate("text", x = 1.05, y = ic_inferior, label = sprintf("Limite inferior\n%.2f", ic_inferior), hjust = 0, vjust = 1.5, color = "blue", size = 3.5) +
+  annotate("text", x = 1.05, y = ic_superior, label = sprintf("Limite superior\n%.2f", ic_superior), hjust = 0, vjust = -0.5, color = "blue", size = 3.5) +
+  annotate("text", x = 0.95, y = media_amostra, label = sprintf("Média amostra\n%.2f", media_amostra), hjust = 1, color = "blue", size = 3.5) +
+  annotate("text", x = 1.05, y = media_hipotese, label = "Hipótese nula:\nu = 32", hjust = 0, vjust = 0.5, color = "red", size = 3.5) +
+
+  # Limites do eixo y
   ylim(min(ic_inferior, media_hipotese) - 2, max(ic_superior, media_amostra) + 2) +
+
+  # Título e tema
   labs(title = "Intervalo de Confiança da Média de Idade (95%)",
        x = "", y = "Idade") +
   theme_minimal()
 
 
+#--------------------------------------------------------------------------
+#--------------------------------------------------------------------------
 # f) Poder do teste se média real = 34
 media_real <- 34
 delta <- (media_real - media_hipotese) / erro_padrao
@@ -298,14 +258,48 @@ cat(ifelse(poder >= 0.80,
            "✅ Poder adequado (≥ 80%).\n",
            "❌ Poder baixo (< 80%). Considere aumentar a amostra.\n"))
 
+#--------------------------------------------------------------------------
+#--------------------------------------------------------------------------
 # g) Tamanho mínimo para detectar média = 34 com 95% de poder
-z_alpha <- qnorm(1 - alpha)
-z_beta <- qnorm(0.80)
-n_g <- ceiling(((z_alpha + z_beta) * desvio_amostral / (34 - media_hipotese))^2)
 
-cat("\n📍 g) Tamanho mínimo da amostra para detectar média = 34 com 95% de poder:\n")
-cat("Amostra mínima:", n_g, "\n")
+# Dados da amostra
+n <- length(amostra_idade)
+
+# Hipótese
+media_hipotese <- 34
+alpha <- 0.05
+poder <- 0.95
+
+# Cálculo dos valores críticos da normal padrão
+z_alpha <- qnorm(1 - alpha/2)  # bicaudal, 5% => 0.975
+z_beta <- qnorm(poder)          # poder de 95%
+
+# Diferença mínima a ser detectada
+delta <- abs(media_hipotese - media_amostra)
+
+# Cálculo do tamanho mínimo da amostra
+n_g <- ceiling(((z_alpha + z_beta) * desvio_amostral / delta)^2)
+
+# Saída dos resultados
+cat("\n📍 Tamanho mínimo da amostra para detectar média = 34 com 95% de poder:\n")
+cat("Amostra mínima necessária:", n_g, "\n")
 cat("Amostra coletada:", n, "\n")
 cat(ifelse(n >= n_g, "✅ A amostra é suficiente.\n", "❌ A amostra NÃO é suficiente.\n"))
 
+# Criar data frame para o gráfico
+df_n <- data.frame(
+  Tipo = factor(c("Amostra coletada", "Amostra necessária"), 
+                levels = c("Amostra coletada", "Amostra necessária")),
+  Tamanho = c(n, n_g)
+)
+
+# Gráfico comparativo
+ggplot(df_n, aes(x = Tipo, y = Tamanho, fill = Tipo)) +
+  geom_bar(stat = "identity", width = 0.5) +
+  geom_text(aes(label = Tamanho), vjust = -0.5, size = 5) +
+  scale_fill_manual(values = c("steelblue", "firebrick")) +
+  ylim(0, max(n_g, n) + 20) +
+  labs(title = "Tamanho da Amostra: Coletada vs Necessária (Poder 95%, teste bilateral)",
+       y = "Tamanho da Amostra", x = "") +
+  theme_minimal() 
 

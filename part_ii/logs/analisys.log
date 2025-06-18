@@ -11,19 +11,6 @@
 📍 b) Intervalo de 95% para a média populacional de Idade:
 Intervalo: [28.94 ; 37.22]
 Interpretação: Estamos 95% confiantes de que a média populacional de idade está entre 28.94 e 37.22 anos.
-Warning messages:
-1: In geom_text(aes(x = media_amostra, y = max(y) * 0.9,  ... :
-  [1m[22mAll aesthetics have length 1, but the data has 300 rows.
-[36mℹ[39m Please consider using `annotate()` or provide this layer with data containing
-  a single row.
-2: In geom_text(aes(x = ic_inferior, y = 0, label = sprintf("%.2f",  ... :
-  [1m[22mAll aesthetics have length 1, but the data has 300 rows.
-[36mℹ[39m Please consider using `annotate()` or provide this layer with data containing
-  a single row.
-3: In geom_text(aes(x = ic_superior, y = 0, label = sprintf("%.2f",  ... :
-  [1m[22mAll aesthetics have length 1, but the data has 300 rows.
-[36mℹ[39m Please consider using `annotate()` or provide this layer with data containing
-  a single row.
 
 📍 c) Tamanho mínimo de amostra para precisão de 1 ano:
 Amostra necessária: 429 
@@ -41,7 +28,7 @@ t = 0.538, p-valor = 0.2977
 Poder do teste: 85.17%
 ✅ Poder adequado (≥ 80%).
 
-📍 g) Tamanho mínimo da amostra para detectar média = 34 com 95% de poder:
-Amostra mínima: 156 
+📍 Tamanho mínimo da amostra para detectar média = 34 com 95% de poder:
+Amostra mínima necessária: 1546 
 Amostra coletada: 25 
 ❌ A amostra NÃO é suficiente.
