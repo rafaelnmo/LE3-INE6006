@@ -1,0 +1,20 @@
+Amostra Renda - OESTE:
+ [1] 6.14 1.61 3.63 2.99 2.72 1.89 5.73 2.12 2.19 4.39 3.09 1.99 1.99 2.82 3.48
+
+Amostra Renda - LESTE:
+ [1] 3.53 2.31 1.74 1.03 2.13 1.48 3.79 1.66 3.18 1.62 2.32 1.28 1.36 1.04 2.24
+
+Intervalo de Confiança 95% para média Renda OESTE: [ 2.358 ,  3.879 ]
+Intervalo de Confiança 95% para média Renda LESTE: [ 1.566 ,  2.528 ]
+
+Interpretação:
+Esses intervalos indicam onde, com 95% de confiança, esperamos que a média verdadeira da renda dos eleitores em cada região esteja.
+Como os intervalos de confiança SE sobrepõem, não há evidência clara a partir dos intervalos que as médias sejam diferentes.
+
+Variância amostral OESTE: 1.887 
+Variância amostral LESTE: 0.755 
+
+Teste F para igualdade das variâncias - estatística F: 2.5 
+Graus de liberdade: df1 = 14 , df2 = 14 
+Intervalo crítico para não rejeição de H0 (5% bilateral): [ 0.336 ,  2.979 ]
+Resultado: Não rejeita-se H0, não havendo evidência para diferença entre as variâncias das regiões OESTE e LESTE .
