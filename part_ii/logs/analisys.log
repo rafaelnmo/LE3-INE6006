@@ -1,0 +1,47 @@
+
+📊 [INFO] Amostra aleatória de 25 valores de Idade:
+ [1] 37 38 52 37 18 29 40 45 33 23 29 18 26 55 31 30 40 23 18 36 26 27 31 46 39
+
+📈 [INFO] Resumo estatístico da amostra:
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  18.00   26.00   31.00   33.08   39.00   55.00 
+
+📍 a) Gráfico de probabilidade normal para os valores da amostra
+
+📍 b) Intervalo de 95% para a média populacional de Idade:
+Intervalo: [28.94 ; 37.22]
+Interpretação: Estamos 95% confiantes de que a média populacional de idade está entre 28.94 e 37.22 anos.
+Warning messages:
+1: In geom_text(aes(x = media_amostra, y = max(y) * 0.9,  ... :
+  [1m[22mAll aesthetics have length 1, but the data has 300 rows.
+[36mℹ[39m Please consider using `annotate()` or provide this layer with data containing
+  a single row.
+2: In geom_text(aes(x = ic_inferior, y = 0, label = sprintf("%.2f",  ... :
+  [1m[22mAll aesthetics have length 1, but the data has 300 rows.
+[36mℹ[39m Please consider using `annotate()` or provide this layer with data containing
+  a single row.
+3: In geom_text(aes(x = ic_superior, y = 0, label = sprintf("%.2f",  ... :
+  [1m[22mAll aesthetics have length 1, but the data has 300 rows.
+[36mℹ[39m Please consider using `annotate()` or provide this layer with data containing
+  a single row.
+
+📍 c) Tamanho mínimo de amostra para precisão de 1 ano:
+Amostra necessária: 429 
+Amostra coletada: 25 
+❌ A amostra NÃO é suficiente.
+
+📍 d) Teste t para H0: média = 32 vs H1: média > 32
+t = 0.538, p-valor = 0.2977
+❌ Não rejeitamos H0. Não há evidência suficiente de que a média é maior que 32.
+
+📍 e) Comparação entre intervalo de confiança (b) e teste (d):
+⚠️ O intervalo inclui 32 → consistente com a não rejeição de H0.
+
+📍 f) Poder do teste (média real = 34):
+Poder do teste: 85.17%
+✅ Poder adequado (≥ 80%).
+
+📍 g) Tamanho mínimo da amostra para detectar média = 34 com 95% de poder:
+Amostra mínima: 156 
+Amostra coletada: 25 
+❌ A amostra NÃO é suficiente.

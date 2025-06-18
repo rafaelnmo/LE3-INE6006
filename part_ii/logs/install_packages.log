@@ -1,0 +1,25 @@
+[[1]]
+[1] "dplyr"     "stats"     "graphics"  "grDevices" "utils"     "datasets" 
+[7] "methods"   "base"     
+
+[[2]]
+[1] "ggplot2"   "dplyr"     "stats"     "graphics"  "grDevices" "utils"    
+[7] "datasets"  "methods"   "base"     
+
+[[3]]
+ [1] "readr"     "ggplot2"   "dplyr"     "stats"     "graphics"  "grDevices"
+ [7] "utils"     "datasets"  "methods"   "base"     
+
+[[4]]
+ [1] "tidyr"     "readr"     "ggplot2"   "dplyr"     "stats"     "graphics" 
+ [7] "grDevices" "utils"     "datasets"  "methods"   "base"     
+
+[[5]]
+ [1] "jsonlite"  "tidyr"     "readr"     "ggplot2"   "dplyr"     "stats"    
+ [7] "graphics"  "grDevices" "utils"     "datasets"  "methods"   "base"     
+
+[[6]]
+ [1] "stringdist" "jsonlite"   "tidyr"      "readr"      "ggplot2"   
+ [6] "dplyr"      "stats"      "graphics"   "grDevices"  "utils"     
+[11] "datasets"   "methods"    "base"      
+
