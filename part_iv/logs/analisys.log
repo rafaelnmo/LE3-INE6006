@@ -18,3 +18,17 @@ Teste F para igualdade das variâncias - estatística F: 2.5
 Graus de liberdade: df1 = 14 , df2 = 14 
 Intervalo crítico para não rejeição de H0 (5% bilateral): [ 0.336 ,  2.979 ]
 Resultado: Não rejeita-se H0, não havendo evidência para diferença entre as variâncias das regiões OESTE e LESTE .
+
+	Two Sample t-test
+
+data:  amostra_oeste and amostra_leste
+t = 2.553, df = 28, p-value = 0.01642
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 0.2117474 1.9309193
+sample estimates:
+mean of x mean of y 
+ 3.118667  2.047333 
+
+
+Resultado: Rejeita-se H0. Há evidência de que as médias das rendas das regiões OESTE e LESTE são diferentes.
