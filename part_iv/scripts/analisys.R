@@ -228,32 +228,6 @@ if (ic_oeste[2] < ic_leste[1] | ic_leste[2] < ic_oeste[1]) {
 
 #--------------------------------------------------------------------------
 #--------------------------------------------------------------------------
-# e.3) Teste para igualdade das variâncias (Teste F)
-
-# var_oeste <- var(amostra_oeste)
-# var_leste <- var(amostra_leste)
-
-# cat("\nVariância amostral OESTE:", round(var_oeste, 3), "\n")
-# cat("Variância amostral LESTE:", round(var_leste, 3), "\n")
-
-# f_estat <- var_oeste / var_leste
-# df1 <- length(amostra_oeste) - 1
-# df2 <- length(amostra_leste) - 1
-
-# # Valor crítico para teste bilateral (F-distribution)
-# f_critico_inf <- qf(alpha/2, df1, df2)
-# f_critico_sup <- qf(1 - alpha/2, df1, df2)
-
-# cat("\nTeste F para igualdade das variâncias - estatística F:", round(f_estat,3), "\n")
-# cat("Intervalo crítico para rejeição (5% bilateral): [", round(f_critico_inf,3), ", ", round(f_critico_sup,3), "]\n")
-
-# if (f_estat < f_critico_inf | f_estat > f_critico_sup) {
-#   cat("Resultado: Rejeita-se H0, indicando que as variâncias são diferentes.\n")
-# } else {
-#   cat("Resultado: Não rejeita-se H0, não havendo evidência para diferenças entre variâncias.\n")
-# }
-
-#--------------------------------------------------------------------------
 # e.3) Teste para igualdade das variâncias (Teste F bilateral)
 conf_level <- 0.95
 alpha <- 1 - conf_level
@@ -294,3 +268,58 @@ if (f_estat < f_critico_inf | f_estat > f_critico_sup) {
 } else {
   cat("Resultado: Não rejeita-se H0, não havendo evidência para diferença entre as variâncias das regiões", maior_variancia, "e", menor_variancia, ".\n")
 }
+
+
+#--------------------------------------------------------------------------
+#--------------------------------------------------------------------------
+# e.4) Teste t para médias com variâncias iguais
+
+teste_t <- t.test(amostra_oeste, amostra_leste,
+                  alternative = "two.sided",
+                  var.equal = TRUE,
+                  conf.level = 0.95)
+
+# Exibir resultados do teste t
+print(teste_t)
+
+# Decisão com base no p-valor
+alpha <- 0.05
+if (teste_t$p.value < alpha) {
+  cat("\nResultado: Rejeita-se H0. Há evidência de que as médias das rendas das regiões OESTE e LESTE são diferentes.\n")
+} else {
+  cat("\nResultado: Não se rejeita H0. Não há evidência de diferença entre as médias das rendas das regiões OESTE e LESTE.\n")
+}
+
+# Gráfico boxplot comparando as duas amostras
+renda <- c(amostra_leste, amostra_oeste)
+regiao <- c(rep("LESTE", length(amostra_leste)), rep("OESTE", length(amostra_oeste)))
+
+boxplot(renda ~ regiao,
+        main = "Distribuição das Rendas por Região",
+        ylab = "Renda (mil R$)",
+        xlab = "Região",
+        col = c("lightblue", "lightgreen"),
+        names = c("Região LESTE", "Região OESTE"))
+
+# Médias
+media_leste <- mean(amostra_leste)
+media_oeste <- mean(amostra_oeste)
+
+# Linhas tracejadas indicando a média
+abline(h = media_leste, col = "blue", lty = 2)
+abline(h = media_oeste, col = "green", lty = 2)
+
+# Labels das médias no gráfico
+text(x = 1, y = media_leste + 0.15, 
+     labels = paste0("Média: ", round(media_leste, 2)), 
+     col = "blue", cex = 0.8)
+
+text(x = 2, y = media_oeste + 0.15, 
+     labels = paste0("Média: ", round(media_oeste, 2)), 
+     col = "darkgreen", cex = 0.8)
+
+# Legenda
+legend("topright", 
+       legend = c("Média LESTE", "Média OESTE"), 
+       col = c("blue", "green"), 
+       lty = 2, bty = "n", cex = 0.9)
